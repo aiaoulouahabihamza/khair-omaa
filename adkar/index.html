@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>خير أمة - الأذكار</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <link rel="stylesheet" href="../variables.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== الشريط العلوي ===== -->
+    <header class="main-header" id="mainHeader">
+        <div class="header-content">
+            <a href="../index.html" class="back-btn">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <div class="header-title">
+                <h1><i class="fa-solid fa-hands-praying"></i> الأذكار</h1>
+                <span>اللهم ذكرنا ما نسينا</span>
+            </div>
+            <button class="header-btn theme-toggle" id="themeToggle">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== المحتوى ===== -->
+    <main class="main-content">
+        
+        <div class="loading-state" id="loadingState">
+            <i class="fa-solid fa-spinner spin"></i>
+            <span>جاري تحميل الأذكار...</span>
+        </div>
+
+        <div class="categories-tabs" id="categoriesTabs"></div>
+        <div class="azkar-list" id="azkarList"></div>
+
+    </main>
+
+    <!-- ===== مودال الذكر ===== -->
+    <div class="modal-overlay" id="zekrModal">
+        <div class="modal-content zekr-modal-content">
+            <div class="modal-header">
+                <h2 id="modalZekrTitle">الذكر</h2>
+                <button class="modal-close" id="modalZekrClose">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="zekr-modal-body">
+                <div class="modal-zekr-text" id="modalZekrText"></div>
+                <div class="modal-zekr-meta">
+                    <span id="modalZekrRef"></span>
+                    <span id="modalZekrCount"></span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-copy" id="modalCopyBtn">
+                        <i class="fa-regular fa-copy"></i> نسخ
+                    </button>
+                    <button class="btn-done" id="modalDoneBtn">
+                        <i class="fa-regular fa-circle"></i> تم التنفيذ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

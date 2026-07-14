@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>خير أمة - الأحاديث</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="../variables.css" />
+    <link rel="stylesheet" href="hadiths.css" />
+</head>
+<body>
+
+    <header class="main-header" id="mainHeader">
+        <div class="header-content">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            <div class="header-title">
+                <h1 id="bookTitle"><i class="fas fa-book"></i> --</h1>
+                <span id="currentLocation">الأبواب</span>
+            </div>
+            <button class="header-btn theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <div class="loading-state" id="loadingState">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>جاري تحميل الأحاديث...</span>
+        </div>
+
+        <!-- شريط البحث -->
+        <div class="search-bar" id="searchBar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="ابحث في الأحاديث..." />
+            <button id="searchClear" class="search-clear" style="display:none;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- الأبواب -->
+        <div id="chaptersView">
+            <div class="section-label">الأبواب</div>
+            <div class="chapters-list" id="chaptersList"></div>
+        </div>
+
+        <!-- الأحاديث -->
+        <div id="hadithsView" style="display:none;">
+            <div class="section-label" id="chapterName">--</div>
+            <div class="hadiths-list" id="hadithsList"></div>
+            <button class="back-to-chapters" id="backToChapters">
+                <i class="fas fa-arrow-right"></i> العودة للأبواب
+            </button>
+            <div id="loadMoreContainer" style="display:none; text-align:center; margin-top:16px;">
+                <button class="load-more-btn" id="loadMoreBtn">
+                    <i class="fas fa-chevron-down"></i> تحميل المزيد
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- مودال الحديث -->
+    <div class="modal-overlay" id="hadithModal">
+        <div class="modal-content hadith-modal">
+            <div class="modal-header">
+                <h2 id="modalHadithTitle">الحديث</h2>
+                <button class="modal-close" id="modalHadithClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="hadith-modal-body" id="modalHadithBody"></div>
+        </div>
+    </div>
+
+    <script src="hadiths.js"></script>
+</body>
+</html>

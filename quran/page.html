@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>خير أمة - المصحف</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    
+    <link rel="stylesheet" href="../variables.css" />
+    <link rel="stylesheet" href="page.css" />
+    
+    
+</head>
+<body>
+
+    <!-- ===== الهيدر الثابت ===== -->
+    <div class="fixed-header" id="fixedHeader">
+        <div class="fixed-header-content">
+            <div class="header-right">
+                <a href="index.html" class="back-btn" style="text-decoration:none;color:inherit;">
+                    <i class="fa-solid fa-arrow-right" style="font-size:20px;color:var(--color-text-light);"></i>
+                </a>
+                <div class="surah-name-fixed" id="surahNameFixed">الفاتحة</div>
+            </div>
+            <div class="header-left">
+                <div class="hizb-info" id="hizbInfo">الجزء ١ · الحزب ١</div>
+                <button class="theme-toggle-btn" id="themeToggle" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--color-text-light);">
+                    <i class="fa-solid fa-moon" style="font-size:18px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="quran-viewer" id="quranViewer"></div>
+
+    <script src="page.js"></script>
+</body>
+</html>

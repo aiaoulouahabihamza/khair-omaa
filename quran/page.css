@@ -1,0 +1,365 @@
+@import url('../variables.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--color-bg);
+    font-family: var(--font-family);
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ملاحظة: الوضع الداكن يُدار مركزياً من variables.css عبر [data-theme="dark"]
+   لا تُكرر متغيرات الثيم هنا حتى تبقى كل الصفحات متطابقة */
+
+/* ===== الهيدر الثابت ===== */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    background: var(--color-bg);
+    padding: 6px var(--content-padding);
+    border-bottom: 1px solid var(--color-border);
+    height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+.fixed-header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.surah-name-fixed {
+    font-size: 18px;
+    background: #F1E7DD;
+    border-radius: 15px;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-text-light);
+    font-family: var(--font-amiri);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hizb-info {
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    background: #EBDDD0;
+    border-radius: 15px;
+    font-size: 18px;
+    color: var(--color-text-lighter);
+    font-weight: 700;
+    font-family: var(--font-amiri);
+}
+
+/* ===== الحاوية الرئيسية ===== */
+.quran-viewer {
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    padding-top: 44px;
+    background: var(--color-bg);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior-y: none;
+}
+
+.quran-viewer::-webkit-scrollbar {
+    display: none;
+}
+
+/* ===== كل صفحة ===== */
+.quran-page {
+    width: 100%;
+    height: calc(100vh - 44px);
+    min-height: calc(100vh - 44px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px var(--content-padding) 0;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== محتوى الصفحة =====
+   الوضع الافتراضي: الأسطر تبدأ من أعلى الصفحة (flex-start) — مناسب للصفحات
+   الكاملة (عادة 15 سطراً) التي تملأ الشاشة تماماً.
+   الوضع المضغوط (.page-content--compact): يُضاف تلقائياً عبر page.js للصفحات
+   القليلة الأسطر (كالفاتحة وبداية سورة جديدة) بحيث يتمركز محتواها عمودياً
+   بمسافات متناسبة بدل ترك فراغ كبير أسفلها فقط. */
+.page-content {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0;
+    margin: 0;
+}
+
+.page-content--compact {
+    justify-content: center;
+}
+
+.page-content--compact .surah-header-block {
+    margin-bottom: 5svh;
+}
+
+/* ===== السطر القرآني — عرض ثابت موحّد بين جميع الأسطر (كالمصحف المطبوع) =====
+   text-align: justify + text-align-last: justify يمددان الكلمات (عبر الكشيدة
+   المدمجة أصلاً في نص الخط المغربي) حتى يمتلئ عرض السطر بالكامل، بحيث لا يوجد
+   سطر أقصر أو أطول من غيره. line-height ثابت بالبكسل (لا نسبي) يمنع أي تفاوت
+   أو تداخل بين الأسطر، ويضمن تباعداً موحداً بقيمة --quran-line-height بالضبط. */
+.quran-line {
+    font-family: var(--font-maghribi);
+    font-size: 30px;
+    line-height: var(--quran-line-height);
+    height: var(--quran-line-height);
+    text-align: justify;
+    text-align-last: justify;
+    text-justify: distribute;
+    color: var(--color-text);
+    padding: 0;
+    margin: 0 0 var(--quran-line-gap);
+    direction: rtl;
+    display: block;
+    width: 100%;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.quran-line:last-child {
+    margin-bottom: 0;
+}
+
+/* كل كلمة قرآنية كوحدة غير قابلة للانكسار، ليضبط word-spacing المسافة بينها بدقة */
+.q-word {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* ===== رقم الآية ===== */
+.ayah-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 2px;
+    position: relative;
+    width: 34px;
+    height: 46px;
+}
+
+.ayah-marker .ayah-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.ayah-marker .ayah-number {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-amiri);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-light);
+    line-height: 1;
+    margin-top: 2px;
+}
+
+/* ===== صندوق اسم السورة ===== */
+.surah-header-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.surah-header-block .surah-frame {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.surah-header-block .surah-title-text {
+    position: relative;
+    z-index: 1;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-text-light);
+    font-family: var(--font-surah-title);
+    padding: 0 44px;
+}
+
+/* ===== خط فاصل + رقم الصفحة =====
+   حاجز بصري بارز وواضح تماماً بين كل صفحة والتي تليها، لمنع أي التباس أو
+   إحساس بتراكب المحتوى أثناء التمرير */
+.page-separator {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    height: 44px;
+    margin-top: 0;
+    padding: 0 20px;
+    border-top: 2px solid var(--color-border);
+}
+
+.page-separator::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 50%;
+    height: 2px;
+    background: var(--color-primary-light);
+    opacity: 0.55;
+    z-index: 0;
+}
+
+.page-separator .page-frame-box {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 18px;
+    background: var(--color-bg);
+}
+
+.page-separator .page-frame-box .page-number-text {
+    position: relative;
+    z-index: 2;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--color-primary);
+    font-family: var(--font-amiri);
+    line-height: 1;
+    min-width: 32px;
+    text-align: center;
+}
+
+/* ===== رسالة خطأ ===== */
+.page-error {
+    color: var(--color-text-lighter);
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+}
+
+/* ===== تجاوب ===== */
+@media (max-width: 480px) {
+    .fixed-header {
+        padding: 5px var(--content-padding-mobile);
+        height: 40px;
+    }
+    .surah-name-fixed {
+        font-size: 14px;
+    }
+    .hizb-info {
+        font-size: 10px;
+    }
+    .quran-line {
+        font-size: 24px;
+        line-height: 44px;
+        height: 44px;
+    }
+    .ayah-marker {
+        width: 28px;
+        height: 38px;
+    }
+    .ayah-marker .ayah-number {
+        font-size: 13px;
+    }
+    .surah-header-block {
+        height: 50px;
+    }
+    .surah-header-block .surah-title-text {
+        font-size: 20px;
+        padding: 0 32px;
+    }
+    .page-separator {
+        height: 36px;
+    }
+    .page-separator .page-frame-box .page-number-text {
+        font-size: 14px;
+    }
+    .quran-page {
+        height: calc(100vh - 40px);
+        min-height: calc(100vh - 40px);
+        padding: 1px var(--content-padding-mobile) 0;
+    }
+    .quran-viewer {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 360px) {
+    .quran-line {
+        font-size: 22px;
+        line-height: 40px;
+        height: 40px;
+    }
+    .ayah-marker {
+        width: 26px;
+        height: 34px;
+    }
+    .ayah-marker .ayah-number {
+        font-size: 12px;
+    }
+    .surah-header-block .surah-title-text {
+        font-size: 18px;
+    }
+    .page-separator {
+        height: 32px;
+    }
+}

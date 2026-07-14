@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>خير أمة - التطبيق الإسلامي</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <link rel="stylesheet" href="variables.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ========================================= -->
+    <!-- الشريط العلوي                            -->
+    <!-- ========================================= -->
+    <header class="main-header" id="mainHeader">
+        <div class="header-content">
+            <div class="header-right">
+                <span class="ayah-text">كنتم خير أمة أخرجت للناس</span>
+            </div>
+            <div class="header-left">
+                <button class="header-btn theme-toggle" id="themeToggle">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="header-btn profile-btn" id="profileBtn">
+                    <i class="fa-solid fa-circle-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================= -->
+    <!-- المحتوى الرئيسي                          -->
+    <!-- ========================================= -->
+    <main class="main-content">
+
+        <!-- ===== التاريخ ===== -->
+        <section class="card date-card">
+            <div class="date-hijri">
+                <span class="date-label">التاريخ الهجري</span>
+                <span class="date-value" id="hijriDate">جاري التحميل...</span>
+            </div>
+            <div class="date-divider"></div>
+            <div class="date-gregorian">
+                <span class="date-label">التاريخ الميلادي</span>
+                <span class="date-value" id="gregorianDate">--</span>
+            </div>
+        </section>
+
+        <!-- ===== أوقات الصلاة ===== -->
+        <section class="card prayer-mini">
+            <div class="prayer-mini-header">
+                <span><i class="fa-regular fa-clock"></i> أوقات الصلاة</span>
+                <a href="./prayer/index.html" class="btn-link">عرض الكل</a>
+            </div>
+            <div class="prayer-mini-grid" id="prayerMiniGrid">
+                <div class="prayer-mini-item"><span class="p-name">الفجر</span><span class="p-time" id="miniFajr">--</span></div>
+                <div class="prayer-mini-item"><span class="p-name">الظهر</span><span class="p-time" id="miniDhuhr">--</span></div>
+                <div class="prayer-mini-item"><span class="p-name">العصر</span><span class="p-time" id="miniAsr">--</span></div>
+                <div class="prayer-mini-item"><span class="p-name">المغرب</span><span class="p-time" id="miniMaghrib">--</span></div>
+                <div class="prayer-mini-item"><span class="p-name">العشاء</span><span class="p-time" id="miniIsha">--</span></div>
+            </div>
+        </section>
+
+        <!-- ===== آخر قراءة ===== -->
+        <section class="card recent-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-clock-rotate-left"></i> آخر قراءة</span>
+                <button class="btn-link" id="viewAllRecent">عرض الكل</button>
+            </div>
+            <div class="recent-content" id="recentContent">
+                <div class="empty-state">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>لم تقرأ شيئاً بعد</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== أدعية من القرآن والسنة ===== -->
+        <section class="card dua-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-hand"></i> أدعية من القرآن والسنة</span>
+                <span class="dua-source" id="duaSource">--</span>
+            </div>
+            <div class="dua-content">
+                <div class="dua-item">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <span class="dua-text" id="randomDua">جاري التحميل...</span>
+                </div>
+            </div>
+            <!-- نقاط التبديل -->
+            <div class="dots-container" id="duaDots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+            </div>
+        </section>
+
+        <!-- ===== آية وعبرة ===== -->
+        <section class="card verse-card">
+            <div class="verse-header">
+                <i class="fa-solid fa-book-open"></i>
+                <span>آية وعبرة</span>
+            </div>
+            <div class="verse-content">
+                <p class="verse-text" id="verseText">جاري التحميل...</p>
+                <span class="verse-ref" id="verseRef">--</span>
+                <p class="verse-lesson" id="verseLesson">--</p>
+            </div>
+            <!-- نقاط التبديل -->
+            <div class="dots-container" id="verseDots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+            </div>
+        </section>
+
+        <!-- ===== زر المزيد ===== -->
+        <button class="card more-btn" id="moreBtn">
+            <i class="fa-solid fa-grip"></i>
+            <span>المزيد من الخدمات</span>
+        </button>
+
+    </main>
+
+    <!-- ========================================= -->
+    <!-- مودال المزيد                             -->
+    <!-- ========================================= -->
+    <div class="modal-overlay" id="moreModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-grip"></i> المزيد</h2>
+                <button class="modal-close" id="modalClose">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-grid">
+                <button class="modal-item"><i class="fa-solid fa-book"></i><span>المكتبة</span></button>
+                <button class="modal-item"><i class="fa-solid fa-users"></i><span>القصص</span></button>
+                <button class="modal-item"><i class="fa-solid fa-flag"></i><span>السيرة</span></button>
+                <button class="modal-item"><i class="fa-solid fa-scale-balanced"></i><span>الفتاوى</span></button>
+                <button class="modal-item"><i class="fa-regular fa-compass"></i><span>القبلة</span></button>
+                <button class="modal-item"><i class="fa-solid fa-gear"></i><span>الإعدادات</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- مودال البروفايل                          -->
+    <!-- ========================================= -->
+    <div class="modal-overlay profile-modal" id="profileModal">
+        <div class="modal-content profile-content">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-circle-user"></i> الملف الشخصي</h2>
+                <button class="modal-close" id="profileClose">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="profile-body">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-field">
+                        <label>الاسم</label>
+                        <input type="text" id="profileName" placeholder="أدخل اسمك" />
+                    </div>
+                    <div class="profile-field">
+                        <label>المدينة</label>
+                        <input type="text" id="profileCity" placeholder="أدخل مدينتك" />
+                    </div>
+                    <div class="profile-field">
+                        <label>الدولة</label>
+                        <input type="text" id="profileCountry" placeholder="أدخل دولتك" />
+                    </div>
+                </div>
+                <button class="btn-primary profile-save" id="profileSave">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- الشريط السفلي                            -->
+    <!-- ========================================= -->
+    <nav class="bottom-nav" id="bottomNav">
+        <div class="nav-items">
+            <a href="./quran/index.html" class="nav-item" data-nav="quran">
+                <i class="fa-solid fa-book-open"></i>
+                <span>القرآن</span>
+            </a>
+            <a href="./adkar/index.html" class="nav-item" data-nav="adkar">
+                <i class="fa-solid fa-hands-praying"></i>
+                <span>الأذكار</span>
+            </a>
+            <a href="./index.html" class="nav-item nav-home active" data-nav="home">
+                <div class="nav-home-icon">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <span>الرئيسية</span>
+            </a>
+            <a href="./prayer/index.html" class="nav-item" data-nav="prayer">
+                <i class="fa-solid fa-mosque"></i>
+                <span>الصلاة</span>
+            </a>
+            <a href="./sunah/index.html" class="nav-item" data-nav="sunah">
+                <i class="fa-solid fa-book"></i>
+                <span>السنة</span>
+            </a>
+        </div>
+    </nav>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>خير أمة - أوقات الصلاة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <link rel="stylesheet" href="../variables.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== الشريط العلوي ===== -->
+    <header class="main-header" id="mainHeader">
+        <div class="header-content">
+            <a href="../index.html" class="back-btn">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <div class="header-title">
+                <h1><i class="fa-solid fa-mosque"></i> أوقات الصلاة</h1>
+                <span id="currentDate">--</span>
+            </div>
+            <button class="header-btn theme-toggle" id="themeToggle">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== المحتوى ===== -->
+    <main class="main-content">
+
+        <!-- ===== الموقع ===== -->
+        <div class="location-card">
+            <div class="location-display">
+                <i class="fa-solid fa-location-dot"></i>
+                <span id="cityDisplay">جاري التحميل...</span>
+                <button id="changeCityBtn" class="btn-icon">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+            </div>
+            <div class="location-status" id="locationStatus">
+                <span class="status-dot"></span>
+                <span class="status-text">جاري التحديث...</span>
+            </div>
+        </div>
+
+        <!-- ===== الصلاة القادمة ===== -->
+        <div class="next-prayer-card">
+            <div class="next-prayer-header">
+                <span>الصلاة القادمة</span>
+                <i class="fa-regular fa-bell"></i>
+            </div>
+            <div class="next-prayer-name" id="nextPrayerName">--</div>
+            <div class="next-prayer-countdown" id="nextPrayerCountdown">--:--:--</div>
+            <div class="next-prayer-time" id="nextPrayerTime">--:--</div>
+        </div>
+
+        <!-- ===== قائمة الصلوات ===== -->
+        <div class="prayer-times-grid">
+
+            <!-- الفجر -->
+            <div class="prayer-item" data-prayer="Fajr">
+                <div class="prayer-icon" style="background: #2D5016;">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="prayer-info">
+                    <span class="prayer-name">الفجر</span>
+                    <span class="prayer-time" id="FajrTime">--:--</span>
+                </div>
+                <div class="prayer-remaining" id="FajrRemaining">--</div>
+            </div>
+
+            <!-- الشروق -->
+            <div class="prayer-item" data-prayer="Sunrise">
+                <div class="prayer-icon" style="background: #CEB88E;">
+                    <i class="fa-solid fa-sun"></i>
+                </div>
+                <div class="prayer-info">
+                    <span class="prayer-name">الشروق</span>
+                    <span class="prayer-time" id="SunriseTime">--:--</span>
+                </div>
+                <div class="prayer-remaining" id="SunriseRemaining">--</div>
+            </div>
+
+            <!-- الظهر -->
+            <div class="prayer-item" data-prayer="Dhuhr">
+                <div class="prayer-icon" style="background: #3A5F7D;">
+                    <i class="fa-regular fa-sun"></i>
+                </div>
+                <div class="prayer-info">
+                    <span class="prayer-name">الظهر</span>
+                    <span class="prayer-time" id="DhuhrTime">--:--</span>
+                </div>
+                <div class="prayer-remaining" id="DhuhrRemaining">--</div>
+            </div>
+
+            <!-- العصر -->
+            <div class="prayer-item" data-prayer="Asr">
+                <div class="prayer-icon" style="background: #6B4423;">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                </div>
+                <div class="prayer-info">
+                    <span class="prayer-name">العصر</span>
+                    <span class="prayer-time" id="AsrTime">--:--</span>
+                </div>
+                <div class="prayer-remaining" id="AsrRemaining">--</div>
+            </div>
+
+            <!-- المغرب -->
+            <div class="prayer-item" data-prayer="Maghrib">
+                <div class="prayer-icon" style="background: #8B5A2B;">
+                    <i class="fa-regular fa-moon"></i>
+                </div>
+                <div class="prayer-info">
+                    <span class="prayer-name">المغرب</span>
+                    <span class="prayer-time" id="MaghribTime">--:--</span>
+                </div>
+                <div class="prayer-remaining" id="MaghribRemaining">--</div>
+            </div>
+
+            <!-- العشاء -->
+            <div class="prayer-item" data-prayer="Isha">
+                <div class="prayer-icon" style="background: #4C637C;">
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+                <div class="prayer-info">
+                    <span class="prayer-name">العشاء</span>
+                    <span class="prayer-time" id="IshaTime">--:--</span>
+                </div>
+                <div class="prayer-remaining" id="IshaRemaining">--</div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ===== مودال تغيير المدينة ===== -->
+    <div class="modal-overlay" id="cityModal">
+        <div class="modal-content city-modal-content">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-location-dot"></i> تغيير المدينة</h2>
+                <button class="modal-close" id="cityModalClose">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="city-modal-body">
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="cityModalInput" placeholder="ابحث عن مدينة..." />
+                </div>
+                <div class="city-suggestions" id="citySuggestions"></div>
+                <button id="detectLocationModalBtn" class="btn-primary full-width">
+                    <i class="fa-solid fa-crosshairs"></i> تحديد الموقع تلقائيا
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

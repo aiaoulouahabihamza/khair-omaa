@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>خير أمة - السنة النبوية</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="../variables.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <header class="main-header" id="mainHeader">
+        <div class="header-content">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            <div class="header-title">
+                <h1><i class="fas fa-book"></i> السنة النبوية</h1>
+                <span>عليكم بسنتي</span>
+            </div>
+            <button class="header-btn theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="loading-state" id="loadingState">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>جاري تحميل الكتب...</span>
+        </div>
+        <div class="books-grid" id="booksGrid"></div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
