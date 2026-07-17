@@ -199,10 +199,57 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// 8. عرض الكل (آخر قراءة)
+// 8. آخر قراءة (مربوطة فعلياً بصفحة القرآن)
 // ============================================
+function buildQuranPageUrl(data) {
+    const params = new URLSearchParams({
+        page: data.page,
+        surah: data.surahNumber,
+        name: data.surahName,
+    });
+    return `./quran/page.html?${params.toString()}`;
+}
+
+function loadRecentReading() {
+    const recentContent = document.getElementById('recentContent');
+    if (!recentContent) return;
+
+    const raw = localStorage.getItem('lastRead');
+    if (!raw) return; // تبقى حالة "لم تقرأ شيئاً بعد" الافتراضية في HTML
+
+    try {
+        const data = JSON.parse(raw);
+        if (!data || !data.page || !data.surahName) return;
+
+        const url = buildQuranPageUrl(data);
+        recentContent.innerHTML = `
+            <a class="recent-item" href="${url}">
+                <div class="recent-item-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="recent-item-info">
+                    <span class="recent-item-surah">سورة ${data.surahName}</span>
+                    <span class="recent-item-page">صفحة ${data.page}</span>
+                </div>
+                <i class="fa-solid fa-chevron-left recent-item-arrow"></i>
+            </a>
+        `;
+    } catch (e) {
+        console.warn('⚠️ تعذّر قراءة آخر قراءة', e);
+    }
+}
+loadRecentReading();
+
 document.getElementById('viewAllRecent')?.addEventListener('click', () => {
-    alert('جميع القراءات السابقة (سيتم ربطها لاحقاً)');
+    const raw = localStorage.getItem('lastRead');
+    if (raw) {
+        try {
+            const data = JSON.parse(raw);
+            window.location.href = buildQuranPageUrl(data);
+            return;
+        } catch (e) {}
+    }
+    window.location.href = './quran/index.html';
 });
 
 // ============================================

@@ -7,7 +7,7 @@
 }
 
 body {
-    font-family: var(--font-amiri);
+    font-family: var(--font-family);
     background: var(--color-bg);
     color: var(--color-text);
     transition: var(--transition);
@@ -238,6 +238,60 @@ i {
 .empty-state span {
     font-size: 14px;
     font-weight: 500;
+}
+
+/* ===== بطاقة آخر قراءة الفعلية (تظهر بدل empty-state عند وجود بيانات) ===== */
+.recent-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 4px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.recent-item:active {
+    background: var(--color-bg-secondary);
+}
+
+.recent-item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-primary);
+    font-size: 18px;
+}
+
+.recent-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.recent-item-surah {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.recent-item-page {
+    font-size: 13px;
+    color: var(--color-text-lighter);
+}
+
+.recent-item-arrow {
+    color: var(--color-text-lighter);
+    font-size: 14px;
+    flex-shrink: 0;
 }
 
 /* ============================================

@@ -79,31 +79,59 @@ html, body {
     font-family: var(--font-amiri);
 }
 
-/* ===== الحاوية الرئيسية ===== */
+/* ===== الحاوية الرئيسية =====
+   معمارية جديدة: صفحة واحدة تملأ الشاشة بالكامل بموضع ثابت (fixed)، والتنقل
+   بين الصفحات عبر سحب أفقي بدل سكرول عمودي. هذا يلغي الاعتماد على
+   scroll-snap وقياسات ارتفاع متغيرة بسبب شريط أدوات المتصفح على الجوال —
+   وهو السبب الجذري لمشكلة "اختفاء سطر من أعلى وظهور سطر من أسفل" التي كانت
+   تحدث مع المعمارية السابقة القائمة على التمرير المستمر. */
 .quran-viewer {
     width: 100%;
     height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
+    height: 100svh;
+    overflow: hidden;
+    position: relative;
     padding-top: 44px;
     background: var(--color-bg);
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    overscroll-behavior-y: none;
 }
 
-.quran-viewer::-webkit-scrollbar {
-    display: none;
+/* حاوية الشرائح الثلاث (سابقة/حالية/تالية) بعرض 3 أضعاف عرض الشاشة.
+   direction: ltr إجباري هنا (رغم أن الصفحة كلها dir="rtl") لأن flex-direction:
+   row مع RTL موروثة يعكس محور x الفعلي عن المتوقع (أول عنصر بالـ DOM يُرسم
+   بأقصى اليمين لكن بإحداثيات x سالبة/معكوسة)، مما كان يُخرج كل الشرائح خارج
+   نطاق الرؤية المرئي تماماً. بما أن الموضع يُدار بالكامل عبر transform بوحدة
+   بكسل من page.js، فرض ltr هنا يجعل حسابات x تسلك سلوكاً قياسياً متوقعاً،
+   بينما محتوى كل صفحة (.quran-page) يستعيد RTL الطبيعي لأنه موروث من
+   <html dir="rtl"> وليس من هذا العنصر تحديداً. */
+.page-viewport {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    width: 300%;
+    height: calc(100vh - 44px);
+    height: calc(100svh - 44px);
+    display: flex;
+    flex-direction: row;
+    direction: ltr;
 }
 
-/* ===== كل صفحة ===== */
+/* كل شريحة تأخذ ثلث عرض الحاوية (= عرض الشاشة الفعلي). ملاحظة مهمة: نفس
+   العنصر يحمل كلاً من class="quran-page" و class="page-slot" معاً (لأن
+   الصفحة نفسها هي الشريحة)، وبما أن .quran-page لها width:100% ونفس درجة
+   الخصوصية (class واحد)، ترتيب الكتابة بالملف يحدد الفائز في cascade. لضمان
+   عدم كسر هذا مستقبلاً بأي إعادة ترتيب، نفرض width بصريح !important هنا. */
+.page-slot {
+    width: 33.3333% !important;
+    height: 100%;
+    flex-shrink: 0;
+    position: relative;
+    direction: rtl;
+}
+
+/* ===== كل صفحة (المحتوى الفعلي داخل كل شريحة) ===== */
 .quran-page {
     width: 100%;
-    height: calc(100vh - 44px);
-    min-height: calc(100vh - 44px);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -238,8 +266,9 @@ html, body {
 }
 
 /* ===== خط فاصل + رقم الصفحة =====
-   حاجز بصري بارز وواضح تماماً بين كل صفحة والتي تليها، لمنع أي التباس أو
-   إحساس بتراكب المحتوى أثناء التمرير */
+   حاجز بصري بارز بين كل صفحة والتي تليها: خطان متناظران (يمين ويسار) يبدآن
+   نحيفين جداً من طرفي الشاشة ويتضخمان تدريجياً (كرأسي سهمين متقابلين) كلما
+   اقتربا من المنتصف حيث يوجد رقم الصفحة، فارغان تماماً من الجهة الخارجية. */
 .page-separator {
     width: 100%;
     display: flex;
@@ -250,19 +279,32 @@ html, body {
     height: 44px;
     margin-top: 0;
     padding: 0 20px;
-    border-top: 2px solid var(--color-border);
 }
 
-.page-separator::before {
+.page-separator::before,
+.page-separator::after {
     content: '';
     position: absolute;
-    left: 20px;
-    right: 20px;
     top: 50%;
-    height: 2px;
+    width: calc(50% - 46px);
+    height: 6px;
+    transform: translateY(-50%);
     background: var(--color-primary-light);
-    opacity: 0.55;
-    z-index: 0;
+    opacity: 0.6;
+}
+
+/* الجهة اليمنى: نحيف عند الحافة الخارجية (يمين)، يتضخم نحو المنتصف (يسار) */
+.page-separator::before {
+    right: 50%;
+    margin-right: 46px;
+    clip-path: polygon(100% 0, 100% 100%, 0 65%, 0 35%);
+}
+
+/* الجهة اليسرى: نحيف عند الحافة الخارجية (يسار)، يتضخم نحو المنتصف (يمين) */
+.page-separator::after {
+    left: 50%;
+    margin-left: 46px;
+    clip-path: polygon(0 0, 0 100%, 100% 65%, 100% 35%);
 }
 
 .page-separator .page-frame-box {
@@ -274,6 +316,17 @@ html, body {
     height: 100%;
     padding: 0 18px;
     background: var(--color-bg);
+}
+
+.page-separator .page-frame-box .page-frame {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: auto;
+    max-width: 110px;
+    object-fit: contain;
 }
 
 .page-separator .page-frame-box .page-number-text {
@@ -292,8 +345,141 @@ html, body {
 .page-error {
     color: var(--color-text-lighter);
     text-align: center;
-    padding: 40px;
-    font-size: 18px;
+    padding: 40px 24px;
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-error-hint {
+    font-size: 13px;
+    color: var(--color-text-lighter);
+    opacity: 0.8;
+    margin: 0 0 12px;
+}
+
+.page-error-retry {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--font-family);
+    cursor: pointer;
+}
+
+.page-error-retry:active {
+    opacity: 0.85;
+}
+
+/* ===== قائمة خيارات الآية (Bottom Sheet) =====
+   تظهر عند الضغط المطول على أي كلمة داخل آية؛ تُظلَّل الآية كاملة بصرياً
+   (class="q-word--highlighted") وتنزلق القائمة من الأسفل بخيارات سريعة. */
+.ayah-sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.ayah-sheet-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.ayah-sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 201;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    box-shadow: var(--shadow-strong);
+    padding: 10px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.ayah-sheet.is-open {
+    transform: translateY(0);
+}
+
+.ayah-sheet-handle {
+    width: 40px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--color-border);
+    margin: 0 auto 14px;
+}
+
+.ayah-sheet-verse-preview {
+    font-family: var(--font-maghribi);
+    font-size: 20px;
+    line-height: 1.9;
+    color: var(--color-text);
+    text-align: center;
+    padding: 4px 4px 18px;
+    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: 12px;
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+.ayah-sheet-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ayah-sheet-action {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 14px 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text);
+    font-family: var(--font-family);
+    text-align: right;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+.ayah-sheet-action:active {
+    background: var(--color-bg-secondary);
+}
+
+.ayah-sheet-action i {
+    width: 22px;
+    color: var(--color-primary);
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+.ayah-sheet-action.is-saved i {
+    color: var(--color-gold-dark);
+}
+
+/* تظليل الآية كاملة أثناء عرض القائمة المنبثقة */
+.q-word--highlighted {
+    background: var(--color-gold-pale);
+    border-radius: 4px;
 }
 
 /* ===== تجاوب ===== */
@@ -308,11 +494,12 @@ html, body {
     .hizb-info {
         font-size: 10px;
     }
-    .quran-line {
-        font-size: 24px;
-        line-height: 44px;
-        height: 44px;
-    }
+    /* ملاحظة: لا نكتب هنا font-size/line-height/height ثابتة لـ .quran-line
+       لأن fitPageToViewport (في page.js) تحسب هذه القيم ديناميكياً لكل صفحة
+       حسب عدد أسطرها الفعلي والمساحة المتاحة على الشاشة، وتكتبها كخاصية
+       inline على كل سطر ومتغير CSS على مستوى الصفحة. أي قيمة ثابتة هنا
+       تتجاوز (بترتيب ظهورها في الملف) الحساب الديناميكي وتُعيد مشكلة فيضان
+       المحتوى/قصّ الأسطر التي عولجت بـ fitPageToViewport. */
     .ayah-marker {
         width: 28px;
         height: 38px;
@@ -335,7 +522,9 @@ html, body {
     }
     .quran-page {
         height: calc(100vh - 40px);
+        height: calc(100svh - 40px);
         min-height: calc(100vh - 40px);
+        min-height: calc(100svh - 40px);
         padding: 1px var(--content-padding-mobile) 0;
     }
     .quran-viewer {
@@ -344,11 +533,6 @@ html, body {
 }
 
 @media (max-width: 360px) {
-    .quran-line {
-        font-size: 22px;
-        line-height: 40px;
-        height: 40px;
-    }
     .ayah-marker {
         width: 26px;
         height: 34px;
