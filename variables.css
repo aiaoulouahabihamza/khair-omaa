@@ -1,5 +1,5 @@
 /* ==================================================================
-   خير أمة — المتغيرات العامة (خطوط + ألوان + قياسات)
+   الجامع — المتغيرات العامة (خطوط + ألوان + قياسات)
    كل تعديل هوية بصرية (لون/خط) يتم من هذا الملف فقط
    ================================================================== */
 
@@ -69,43 +69,43 @@
     --font-surah-title: var(--font-decotype-thuluth), var(--font-decotype-thuluth-ii), serif; /* عناوين السور */
 
     /* -------------------------------------------------------------
-       3) الألوان — الهوية البصرية (مستوحاة من لوحة "بيت شعري" )
+       3) الألوان — الهوية البصرية الجديدة (نسخة البيج والبترولي الهادئ)
        ------------------------------------------------------------- */
-    --color-cream: #F4E4BF;      /* بيج كريمي فاتح */
-    --color-apricot: #EAC39A;    /* برتقالي مشمشي فاتح */
-    --color-slate: #9DABB1;      /* رمادي مزرق */
-    --color-pine: #5C6C6B;       /* أخضر داكن مطفي */
-    --color-olive: #B4C975;      /* أخضر فاتح زيتوني */
+    --color-cream: #E8E2D5;      /* البيج الدافئ الأنيق والراقي جداً كخلفية أساسية */
+    --color-apricot: #D0CDAF;    /* ذهبي زيتوني خفيف ومطفأ جداً للزخارف الهادئة */
+    --color-slate: #88A5A5;      /* درجة بترولية فاتحة ناعمة جداً للمسات الإضافية */
+    --color-pine: #588585;       /* اللون البترولي الأساسي الهادئ للمشروع */
+    --color-olive: #698F8F;      /* درجة بترولية متوسطة متناسقة للبطاقات والتفاعلات */
 
     --color-bg: var(--color-cream);
-    --color-bg-card: #FFFFFF;
-    --color-bg-secondary: #FAF3E4;
-    --color-bg-hover: #FBF6EB;
+    --color-bg-card: #EDEDED;    /* خلفية البطاقات الفاتحة الناعمة جداً */
+    --color-bg-secondary: #E1DBD0;
+    --color-bg-hover: #E7E1D5;
 
-    --color-text: #33403D;
-    --color-text-light: #5C6C6B;
-    --color-text-lighter: #8C978F;
+    --color-text: #2A3B3B;       /* لون نصوص مريح للعين مائل للبترولي الداكن جداً */
+    --color-text-light: #588585;
+    --color-text-lighter: #88A5A5;
 
     --color-primary: var(--color-pine);
-    --color-primary-light: var(--color-olive);
-    --color-primary-dark: #45524F;
+    --color-primary-light: var(--color-slate);
+    --color-primary-dark: #3F6161;
 
     --color-gold: var(--color-apricot);
-    --color-gold-light: #F1D3AE;
-    --color-gold-dark: #C99A66;
-    --color-gold-pale: rgba(234, 195, 154, 0.18);
+    --color-gold-light: #DDDBC7;
+    --color-gold-dark: #AFAA8F;
+    --color-gold-pale: rgba(208, 205, 175, 0.12);
 
-    --color-success: #7C9A6E;
-    --color-warning: var(--color-apricot);
-    --color-error: #B56B5C;
+    --color-success: #6E8F80;
+    --color-warning: var(--color-slate);
+    --color-error: #B5746C;
 
-    /* الحدود والظلال */
-    --color-border: #E8DCC4;
-    --color-border-light: #F0E7D2;
-    --shadow: 0 2px 12px rgba(51, 64, 61, 0.07);
-    --shadow-card: 0 2px 12px rgba(51, 64, 61, 0.07);
-    --shadow-hover: 0 4px 20px rgba(51, 64, 61, 0.12);
-    --shadow-strong: 0 8px 32px rgba(51, 64, 61, 0.18);
+    /* الحدود والظلال — تم تنعيمها كلياً لتتناسب مع ألوان البيج */
+    --color-border: #DDD8CD;     
+    --color-border-light: #E5E0D5;
+    --shadow: 0 4px 16px rgba(88, 133, 133, 0.03);
+    --shadow-card: 0 4px 16px rgba(88, 133, 133, 0.03);
+    --shadow-hover: 0 6px 24px rgba(88, 133, 133, 0.06);
+    --shadow-strong: 0 10px 32px rgba(88, 133, 133, 0.08);
 
     /* -------------------------------------------------------------
        4) القياسات
@@ -136,20 +136,21 @@
 
 /* ===== الوضع الداكن (موحّد لكل صفحات المشروع) ===== */
 [data-theme="dark"] {
-    --color-bg: #1B211F;
-    --color-bg-card: #262E2B;
-    --color-bg-secondary: #202623;
-    --color-bg-hover: #2D3632;
+    --color-bg: #1F2E2E;         /* بترولي داكن ومطفي مريح جداً للعين ليلاً */
+    --color-bg-card: #273A3A;    /* درجة أفتح قليلاً للبطاقات لتبرز عن الخلفية */
+    --color-bg-secondary: #223333;
+    --color-bg-hover: #2D4242;
 
-    --color-text: #EDE7D8;
-    --color-text-light: #B9C2BC;
-    --color-text-lighter: #85918A;
+    --color-text: #E8E2D5;       /* نصوص واضحة وناعمة باللون البيج الدافئ */
+    --color-text-light: #D0CDAF;
+    --color-text-lighter: #88A5A5;
 
-    --color-border: #34403B;
-    --color-border-light: #2B3531;
+    --color-border: #2F4444;
+    --color-border-light: #283B3B;
 
-    --shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.25);
-    --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.35);
-    --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.45);
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.25);
+    --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.35);
+    --shadow-strong: 0 10px 32px rgba(0, 0, 0, 0.45);
 }
+
